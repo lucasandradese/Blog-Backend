@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(path = "/comment")
 public class CommentController {
+
     @GetMapping("/getAll")
     public String getAll(){
         return "getAll";

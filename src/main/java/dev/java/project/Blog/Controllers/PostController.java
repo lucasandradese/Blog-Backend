@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(path = "/post")
 public class PostController {
+
     @GetMapping("/getAll")
     public String getAll(){
         return "getAll";
