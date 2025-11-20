@@ -27,7 +27,7 @@ public class PostModel {
     private String content;
 
     @Column(name = "Date")
-    private Date date;
+    private Date data;
 
     @ManyToOne
     private UserModel userId;

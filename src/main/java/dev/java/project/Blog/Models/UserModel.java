@@ -1,6 +1,5 @@
 package dev.java.project.Blog.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.java.project.Blog.Enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +33,7 @@ public class UserModel implements UserDetails {
     private String password;
 
     @Column(name = "RoleEnum")
+    @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
     @Column(name = "username")
@@ -63,7 +63,7 @@ public class UserModel implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(this.role == RoleEnum.ADMIN){
             return List.of(
-                    new SimpleGrantedAuthority("ROLE_ADIM"),
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
                     new SimpleGrantedAuthority("ROLE_USER")
             );
         }

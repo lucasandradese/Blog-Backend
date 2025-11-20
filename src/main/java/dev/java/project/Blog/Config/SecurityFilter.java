@@ -27,8 +27,11 @@ public class SecurityFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
         String token = extractToken(request);
 
         if(token != null){
@@ -45,10 +48,9 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (authHeader == null) {
             return null;
         }
-        if (authHeader.split(" ")[0].equals("Bearer")) {
-            return "token invalido";
+        if (!authHeader.split(" ")[0].equals("Bearer")) {
+            return null;
         }
-
         return authHeader.split(" ")[1];
     }
 

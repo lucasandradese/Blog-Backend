@@ -1,5 +1,6 @@
 package dev.java.project.Blog.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,13 +25,15 @@ public class CommentModel {
     private String content;
 
     @Column(name = "date")
-    private Date date;
+    private Date data;
 
 
     @ManyToOne
-    private Long userId;
+    @JoinColumn(name = "user_id")
+    private UserModel userId;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private PostModel postId;
 
 }

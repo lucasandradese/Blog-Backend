@@ -1,5 +1,6 @@
 package dev.java.project.Blog.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,11 +19,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SpringSecurityAuthentication {
 
-    private final SecurityFilter securityFilter;
+    @Autowired
+    private SecurityFilter securityFilter;
 
-    public SpringSecurityAuthentication(SecurityFilter securityFilter) {
-        this.securityFilter = securityFilter;
-    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -37,6 +36,16 @@ public class SpringSecurityAuthentication {
                         .requestMatchers(HttpMethod.GET, "/users/get").hasRole("USER")
                         .requestMatchers(HttpMethod.POST, "/users/update").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/users/delete").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/posts/save").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/posts/getAll").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/posts/get").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/posts/update").hasRole("USER")
+                        .requestMatchers(HttpMethod.DELETE, "/posts/delete").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/tags/save").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/tags/getAll").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/tags/get").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/tags/update").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/tags/delete").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -54,7 +63,4 @@ public class SpringSecurityAuthentication {
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
-
 }
